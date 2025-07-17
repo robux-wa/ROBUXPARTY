@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get Robux</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      /* Popup Notification Styles */
+      #popupNotification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        font-family: Arial, sans-serif;
+        display: none;
+        z-index: 9999;
+        animation: slideIn 0.5s ease, fadeOut 0.5s ease 3.5s forwards;
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+
+      /* General Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Kumbh Sans", sans-serif;
+      }
+      body {
+        background-color: #181818;
+        color: #fff;
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        background-color: #181818;
+        border-bottom: 1px solid #c7cbce;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo img {
+        width: 30px;
+      }
+      .logo span {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+      }
+      nav ul li {
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+      nav ul li:hover,
+      nav ul li.active {
+        color: #00b06f;
+      }
+      .middle {
+        width: 70%;
+        margin: 30px auto;
+        height: 168px;
+        background-image: linear-gradient(
+            0deg,
+            rgba(39, 39, 46, 0.5),
+            rgba(39, 39, 46, 0.5)
+          ),
+          url("/images/bp.png");
+        background-position: center;
+        background-size: cover;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+      }
+      .middle h2 {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+      .middle p {
+        font-size: 16px;
+        opacity: 0.9;
+        max-width: 500px;
+      }
+      .box_con {
+        margin: 0 auto;
+        background-color: #242424;
+        min-height: 163px;
+        width: 70%;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+      input {
+        width: 100%;
+        padding: 15px 20px;
+        border: none;
+        background: #f2f4f5;
+        border-radius: 8px;
+        outline: none;
+        font-size: 16px;
+        margin-top: 15px;
+      }
+      button {
+        background: #00b06f;
+        border: none;
+        color: #fff;
+        padding: 12px 40px;
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: all 0.3s;
+      }
+      button:hover {
+        background: #009d5f;
+        transform: translateY(-2px);
+      }
+      .box2,
+      .box3,
+      .box4 {
+        display: none;
+      }
+      h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #fff;
+      }
+      h3 span {
+        color: #00b06f;
+        font-weight: bold;
+      }
+
+      /* Loading Animation Styles */
+      .folding {
+        margin: 20px auto;
+        width: 100px;
+        height: 100px;
+        position: relative;
+        transform: rotateZ(45deg);
+      }
+      .square {
+        position: absolute;
+        top: 36%;
+        right: 35%;
+        width: 30px;
+        height: 30px;
+        background-color: #333;
+        transform: rotateZ(87deg);
+      }
+      .folding .sk-cube {
+        float: left;
+        width: 50%;
+        height: 50%;
+        position: relative;
+        transform: scale(1.1);
+      }
+      .folding .sk-cube:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        animation: sk-foldCubeAngle 2.4s infinite linear both;
+        transform-origin: 100% 100%;
+      }
+      .folding .sk-cube2 {
+        transform: scale(1.1) rotateZ(90deg);
+      }
+      .folding .sk-cube3 {
+        transform: scale(1.1) rotateZ(180deg);
+      }
+      .folding .sk-cube4 {
+        transform: scale(1.1) rotateZ(270deg);
+      }
+      .folding .sk-cube2:before {
+        animation-delay: 0.3s;
+      }
+      .folding .sk-cube3:before {
+        animation-delay: 0.6s;
+      }
+      .folding .sk-cube4:before {
+        animation-delay: 0.9s;
+      }
+      @keyframes sk-foldCubeAngle {
+        0%,
+        10% {
+          transform: perspective(140px) rotateX(-180deg);
+          opacity: 0;
+        }
+        25%,
+        75% {
+          transform: perspective(140px) rotateX(0deg);
+          opacity: 1;
+        }
+        90%,
+        100% {
+          transform: perspective(140px) rotateY(180deg);
+          opacity: 0;
+        }
+      }
+
+      /* Robux Selection Styles */
+      .container {
+        display: flex;
+        flex-direction: column;
+        border-radius: 8px;
+        gap: 1px;
+        background: #333;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        height: 70px;
+        justify-content: space-between;
+        padding: 0 20px;
+        background: #242424;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .row:hover {
+        background: #2a2a2a;
+        transform: translateX(5px);
+      }
+      .row:first-child {
+        border-radius: 8px 8px 0 0;
+      }
+      .row:last-child {
+        border-radius: 0 0 8px 8px;
+      }
+      .price {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .robux_total {
+        display: flex;
+        align-items: center;
+        background-color: #00b06f;
+        color: white;
+        border-radius: 10px;
+        padding: 8px 15px;
+        min-width: 120px;
+        justify-content: center;
+      }
+      .pic {
+        width: 25px;
+        margin-right: 8px;
+      }
+      .robux_total span {
+        font-weight: 600;
+      }
+
+      /* --- STYLES FOR VERIFICATION MODAL --- */
+      #verificationModal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+      .verification-container {
+        text-align: center;
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 450px;
+        margin: auto;
+      }
+      .verification-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      #modalLogo {
+        max-width: 100%;
+        height: auto;
+        max-height: 120px;
+      }
+      .verification-title {
+        color: #005a9c;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 1.4;
+        margin-bottom: 25px;
+      }
+
+      /* MODIFIED: CSS untuk Tombol dengan Ikon */
+      .offer-button {
+        display: flex; /* Mengaktifkan flexbox */
+        align-items: center; /* Membuat ikon dan teks sejajar vertikal */
+        justify-content: center; /* Membuat ikon dan teks di tengah tombol */
+        gap: 10px; /* Memberi jarak antara ikon dan teks */
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        margin-top: 0;
+      }
+      .offer-button:hover {
+        background-color: #e0e0e0;
+      }
+
+      /* BARU: Style untuk tombol follow yang sudah diklik */
+      .offer-button.clicked {
+        background-color: #28a745;
+        color: white;
+        border-color: #218838;
+      }
+      .offer-button.clicked:hover {
+        background-color: #218838;
+      }
+
+      .offer-button i {
+        font-size: 1.2em; /* Membuat ikon sedikit lebih besar dari teks */
+      }
+
+      .verify-now-button {
+        background: #28a745;
+        border: none;
+        color: #fff;
+        padding: 12px 40px;
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: all 0.3s;
+        width: 100%;
+      }
+      .verify-now-button:hover {
+        background: #218838;
+        transform: translateY(-2px);
+      }
+
+      /* BARU: Style untuk tombol continue saat disabled */
+      .verify-now-button:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* --- Styles for initial verification step --- */
+      .verification-step p {
+        font-size: 16px;
+        color: #ccc;
+        margin-bottom: 25px;
+      }
+      #initialVerifyBtn {
+        width: 50%;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @media (max-width: 750px) {
+        .middle,
+        .box_con {
+          width: 95%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        nav {
+          padding: 15px 20px;
+        }
+        nav ul {
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <div class="logo">
+        <span>☰</span>
+        <img src="https://i.postimg.cc/wjR3BTJp/w-robux.png" alt="Robux Logo" />
+      </div>
+      <ul>
+        <li>Discover</li>
+        <li>Marketplace</li>
+        <li class="active">Robux</li>
+      </ul>
+    </nav>
+
+    <div class="middle">
+      <h2>Get Robux</h2>
+      <p>
+        Robux allows you to purchase upgrades for your avatar or buy special
+        abilities in experiences.
+      </p>
+    </div>
+
+    <div class="box_con">
+      <div class="box">
+        <h3>• Roblox Username</h3>
+        <input
+          class="username"
+          type="text"
+          placeholder="Enter your username..."
+        />
+        <button class="getrbx">Next</button>
+      </div>
+      <div class="box2">
+        <div class="folding">
+          <div class="sk-cube1 sk-cube"></div>
+          <div class="sk-cube2 sk-cube"></div>
+          <div class="sk-cube4 sk-cube"></div>
+          <div class="sk-cube3 sk-cube"></div>
+          <div class="square"></div>
+        </div>
+        <p class="useroutput" style="text-align: center; margin-top: 30px"></p>
+      </div>
+      <div class="box3">
+        <div class="container">
+          <div class="row" data-amount="500">
+            <div class="price">$0.00</div>
+            <div class="robux_total">
+              <img
+                class="pic"
+                src="https://i.postimg.cc/wjR3BTJp/w-robux.png"
+                alt="Robux"
+              /><span>500</span>
+            </div>
+          </div>
+          <div class="row" data-amount="10000">
+            <div class="price">$0.00</div>
+            <div class="robux_total">
+              <img
+                class="pic"
+                src="https://i.postimg.cc/wjR3BTJp/w-robux.png"
+                alt="Robux"
+              /><span>10,000</span>
+            </div>
+          </div>
+          <div class="row" data-amount="50000">
+            <div class="price">$0.00</div>
+            <div class="robux_total">
+              <img
+                class="pic"
+                src="https://i.postimg.cc/wjR3BTJp/w-robux.png"
+                alt="Robux"
+              /><span>50,000</span>
+            </div>
+          </div>
+          <div class="row" data-amount="100000">
+            <div class="price">$0.00</div>
+            <div class="robux_total">
+              <img
+                class="pic"
+                src="https://i.postimg.cc/wjR3BTJp/w-robux.png"
+                alt="Robux"
+              /><span>100,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box4">
+        <div class="verification-step">
+          <h3>• <span>Final Step</span></h3>
+          <p>
+            Please click on the button below and complete 1 task to verify that
+            you're not a robot!
+          </p>
+          <button id="initialVerifyBtn">Verify now</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="verificationModal">
+      <div class="verification-container">
+        <div class="verification-header">
+          <img id="modalLogo" src="images/image-logo.png" alt="Sponsor Logo" />
+        </div>
+        <p class="verification-title">
+          CHOOSE THE OFFER AND COMPLETE, ROBUX WILL AUTOMATICALLY BE ENTERED
+          INTO YOUR ACCOUNT
+        </p>
+
+        <button
+          class="modalFollowBtn offer-button"
+          data-link="https://instagram.com/akun1"
+        >
+          <i class="fab fa-instagram"></i> Follow Account 1
+        </button>
+        <button
+          class="modalFollowBtn offer-button"
+          data-link="https://tiktok.com/akun2"
+        >
+          <i class="fab fa-tiktok"></i> Follow Account 2
+        </button>
+        <button
+          class="modalFollowBtn offer-button"
+          data-link="https://facebook.com/akun3"
+        >
+          <i class="fab fa-facebook"></i> Follow Account 3
+        </button>
+        <button
+          class="modalFollowBtn offer-button"
+          data-link="https://youtube.com/akun4"
+        >
+          <i class="fab fa-youtube"></i> Follow Account 4
+        </button>
+        <button
+          class="modalFollowBtn offer-button"
+          data-link="https://instagram.com/akun5"
+        >
+          <i class="fab fa-instagram"></i> Follow Account 5
+        </button>
+
+        <button id="modalContinueBtn" class="verify-now-button" disabled>
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <div id="popupNotification"></div>
+    <audio id="notifSound" preload="auto">
+      <source
+        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9c11d9e249.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <script>
+      // --- SCRIPT TELAH DIMODIFIKASI UNTUK MENDUKUNG LOGIKA VERIFIKASI ---
+      const messages = [
+        "xfasom claimed 50k Robux!",
+        "chaloka claimed 1M Robux!",
+        "guest123 just received 100k Robux!",
+        "user999 unlocked 500k Robux!",
+        "winbot claimed 250k Robux!",
+        "zoro212 just earned 1.2M Robux!",
+        "yara2000 claimed 750k Robux!",
+      ];
+      const notification = document.getElementById("popupNotification");
+      const sound = document.getElementById("notifSound");
+      const rbxbtn = document.querySelector(".getrbx");
+      const usernameInput = document.querySelector(".username");
+      const useroutput = document.querySelector(".useroutput");
+      const robuxRows = document.querySelectorAll(".row");
+      const verificationModal = document.getElementById("verificationModal");
+      const initialVerifyBtn = document.getElementById("initialVerifyBtn");
+      const modalContinueBtn = document.getElementById("modalContinueBtn");
+      const modalFollowButtons = document.querySelectorAll(".modalFollowBtn");
+
+      let selectedUsername = "";
+      let selectedRobuxAmount = "";
+      // BARU: Set untuk melacak tombol yang sudah diklik
+      let clickedButtons = new Set();
+
+      document.addEventListener(
+        "click",
+        () => {
+          sound.play().catch(() => {});
+        },
+        { once: true }
+      );
+
+      function showNotification() {
+        const randomMessage =
+          messages[Math.floor(Math.random() * messages.length)];
+        notification.textContent = randomMessage;
+        notification.style.display = "block";
+        notification.style.animation =
+          "slideIn 0.5s ease, fadeOut 0.5s ease 3.5s forwards";
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+        setTimeout(() => {
+          notification.style.display = "none";
+        }, 4000);
+      }
+
+      rbxbtn.addEventListener("click", () => {
+        if (usernameInput.value.length <= 2) {
+          alert("Please enter a valid username.");
+        } else {
+          selectedUsername = usernameInput.value;
+          useroutput.innerHTML = `Searching for <b>${selectedUsername}</b> ...`;
+          document.querySelector(".box").style.display = "none";
+          document.querySelector(".box2").style.display = "block";
+          setTimeout(() => {
+            document.querySelector(".box2").style.display = "none";
+            document.querySelector(".box3").style.display = "block";
+          }, 4500);
+        }
+      });
+
+      robuxRows.forEach((row) => {
+        row.addEventListener("click", () => {
+          selectedRobuxAmount = row.dataset.amount;
+          document.querySelector(".box3").style.display = "none";
+          useroutput.innerHTML = `Preparing your <b>${parseInt(
+            selectedRobuxAmount
+          ).toLocaleString()} Robux</b> package...<br>Finalizing server connection.`;
+          document.querySelector(".box2").style.display = "block";
+          setTimeout(() => {
+            document.querySelector(".box2").style.display = "none";
+            document.querySelector(".box4").style.display = "block";
+          }, 4000);
+        });
+      });
+
+      // MODIFIKASI: Event listener untuk tombol 'Verify now'
+      initialVerifyBtn.addEventListener("click", () => {
+        // Reset state setiap kali modal dibuka
+        clickedButtons.clear();
+        modalContinueBtn.disabled = true;
+        modalFollowButtons.forEach((btn) => {
+          btn.classList.remove("clicked");
+        });
+
+        verificationModal.style.display = "flex";
+      });
+
+      // MODIFIKASI: Event listener untuk setiap tombol follow
+      modalFollowButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const link = button.dataset.link;
+          if (link && link !== "#") {
+            window.open(link, "_blank");
+          } else {
+            alert("Link untuk akun ini belum diatur.");
+          }
+
+          // Tandai tombol sebagai sudah diklik secara visual
+          button.classList.add("clicked");
+          // Tambahkan tombol ke Set
+          clickedButtons.add(button);
+
+          // Periksa apakah semua tombol sudah diklik
+          if (clickedButtons.size === modalFollowButtons.length) {
+            modalContinueBtn.disabled = false; // Aktifkan tombol continue
+          }
+        });
+      });
+
+      modalContinueBtn.addEventListener("click", () => {
+        const message = `Hello! I want to claim ${parseInt(
+          selectedRobuxAmount
+        ).toLocaleString()} Robux for my Roblox account: ${selectedUsername}. I have completed all the verification tasks. Please process my request.`;
+        const whatsappUrl = `https://wa.me/6282145804242?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappUrl, "_blank");
+        verificationModal.style.display = "none";
+      });
+
+      setTimeout(showNotification, 2000);
+      setInterval(showNotification, 5000);
+    </script>
+  </body>
+</html>
